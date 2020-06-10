@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,15 +36,23 @@ public class UserDetails implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @NotNull
+    @NotEmpty
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+    @NotNull
+    @NotEmpty
     @Basic(optional = false)
     @Column(name = "section")
     private String section;
+    @NotNull
+    @NotEmpty
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
+    @NotNull
+    @NotEmpty
     @Basic(optional = false)
     @Column(name = "role")
     private String role;
@@ -124,7 +134,7 @@ public class UserDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.student.model.UserDetails[ id=" + id + " ]";
+        return "com.example.student.model.UserDetails[ id=" + id + " ], [ name=" + name + " ], [ section=" + section + " ], [ password=" + password + " ]";
     }
     
 }

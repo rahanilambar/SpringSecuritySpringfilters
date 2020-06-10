@@ -7,7 +7,7 @@ package com.example.student.filter;
 
 import com.auth0.jwt.JWT;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import com.example.student.DTO.UserDto;
+import com.example.student.DTO.LoginDto;
 import static com.example.student.constants.SecurityConstants.EXPIRATION_TIME;
 import static com.example.student.constants.SecurityConstants.HEADER_STRING;
 import static com.example.student.constants.SecurityConstants.SECRET;
@@ -35,8 +35,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try {
-            UserDto creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), UserDto.class);
+            LoginDto creds = new ObjectMapper()
+                    .readValue(req.getInputStream(), LoginDto.class);
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getName(),
@@ -54,6 +54,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(((User) authResult.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
+//        Cookie cookie = new Cookie("usercookie", "mycookie");
+//        cookie.setSecure(true);
+//        response.addCookie(cookie);
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }
